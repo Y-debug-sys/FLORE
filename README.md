@@ -1,4 +1,4 @@
-# Anomalous Implementation of the paper "On the (*Generative*) Linear Sketching Problem"
+# Anonymous Implementation of the paper "On the (*Generative*) Linear Sketching Problem"
 
  > This repository contains the anonymous implementation of **FLORE**, the *first* deep generative framework for solving linear sketching problems in data streaming scenarios, submitted to ICML ’26.
 
