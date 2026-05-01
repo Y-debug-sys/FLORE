@@ -15,7 +15,7 @@
 
 ### 📊 Datasets
 
-For reproducibility, **all real-world data streams used in our experiments are included in the supplementary material** of our [OpenReview submission](https://openreview.net/forum?id=kuyXKv6gaA). After downloading, unzip and place them into the following folder:
+For reproducibility, **all real-world data streams used in our experiments are included in the supplementary material** of our submission. After downloading, unzip and place them into the following folder:
 
 ```
 ├── Streams   # 🌐 Network traces or real-life streams (.dat)
