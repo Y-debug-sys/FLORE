@@ -113,6 +113,53 @@ def cm_or_cs_config(memory_bytes):
 #     return {"num_buckets": num_buckets, "depth": NUM_SKETCH_HASH_FUNCTIONS, "width": width}
 
 
+def es_config(memory_bytes, key_size=4, heavy_ratio=0.5):
+    """
+    Configure parameters for Elastic Sketch data structure.
+    
+    This function allocates memory between the heavy part (buckets with entries) 
+    and light part (Count-Min Sketch) of the Elastic Sketch based on the specified 
+    heavy_ratio. The Elastic Sketch uses a bucket-based heavy hitter detection 
+    mechanism combined with a Count-Min sketch for light items.
+    
+    Memory allocation breakdown:
+    - Heavy part: Stores buckets, each containing NUM_ENTRY entries
+    - Each entry requires (key_size + 4) bytes (key + 4-byte integer value)
+    - Light part: Uses Count-Min sketch with NUM_SKETCH_HASH_FUNCTIONS depth
+    
+    Args:
+        memory_bytes (int): Total memory available in bytes for the entire Elastic Sketch
+        key_size (int, optional): Size of each flow key in bytes. Defaults to 4.
+        heavy_ratio (float, optional): Ratio of total memory allocated to the heavy part. 
+                                     Defaults to 0.5 (50% to heavy, 50% to light).
+        
+    Returns:
+        dict: Configuration dictionary containing:
+            - num_buckets (int): Number of buckets in the heavy part
+            - num_per_bucket (int): Number of entries per bucket (fixed to NUM_ENTRY constant)
+            - width (int): Width of the Count-Min sketch (light part)
+            - depth (int): Depth of the Count-Min sketch (fixed to NUM_SKETCH_HASH_FUNCTIONS)
+            
+    Memory calculation details:
+        mem_H = int(memory_bytes * heavy_ratio)  # Heavy part memory allocation
+        mem_L = memory_bytes - mem_H             # Light part memory allocation
+        num_buckets = mem_H // (NUM_ENTRY * (key_size + 4))  # Buckets that fit in heavy memory
+        width = mem_L // (NUM_SKETCH_HASH_FUNCTIONS * ITEM_SIZE)  # Sketch width from light memory
+        
+    Note:
+        - The actual memory usage may be slightly less than memory_bytes due to integer division
+        - NUM_ENTRY is a global constant (default: 64) defining entries per bucket
+        - This configuration matches the ElasticSketch class constructor parameters
+    """
+    mem_H = int(memory_bytes * heavy_ratio)  # Calculate heavy part memory using multiplication
+    mem_L = memory_bytes - mem_H 
+    width = mem_L // (NUM_SKETCH_HASH_FUNCTIONS * ITEM_SIZE)
+
+    # Allocate remaining memory to heavy part slots
+    num_buckets = mem_H // (NUM_ENTRY * (key_size + 4))
+    return {"num_buckets": num_buckets, "num_per_bucket": NUM_ENTRY, "width": width, "depth": NUM_SKETCH_HASH_FUNCTIONS}
+
+
 def ag_config(memory_bytes, key_size=4, heavy_ratio=0.5, max_len=100): 
     """
     Configure parameters for Augmented Sketch data structure.
