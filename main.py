@@ -48,6 +48,7 @@ def main(args):
     # ls_param_dict = ls_config(memory_bytes, args.key_size, has_model=True)
     flore_param_dict = flore_config(memory_bytes, args.key_size, stream_size=args.stream_size)
     ag_param_dict = ag_config(memory_bytes, args.key_size)
+    es_param_dict = es_config(memory_bytes, args.key_size)
 
     if args.data == 'synthetic':
         data_name = args.distribution
@@ -71,13 +72,15 @@ def main(args):
                 "-- PR-sketch (pr): {}\n"\
                 "-- NZE-sketch (nze): {}\n"\
                 # "-- Learning-Augmented Sketches (lcm, lcs, ls): {}\n"\
-                "-- Augmented Sketch (ag): {}\n"\
+                "-- Augmented Sketch (ag): {}\n"\\
+                "-- Elastic Sketch (es): {}\n"\
                 "-- FLORE (flore): {}\n".format(
                     ", ".join(f"{k}={v}" for k, v in sorted(cms_param_dict.items())), 
                     ", ".join(f"{k}={v}" for k, v in sorted(pr_param_dict.items())), 
                     ", ".join(f"{k}={v}" for k, v in sorted(nze_param_dict.items())), 
                     # ", ".join(f"{k}={v}" for k, v in sorted(ls_param_dict.items())), 
                     ", ".join(f"{k}={v}" for k, v in sorted(ag_param_dict.items())), 
+                    ", ".join(f"{k}={v}" for k, v in sorted(es_param_dict.items())), 
                     ", ".join(f"{k}={v}" for k, v in sorted(flore_param_dict.items()))
                 ))
 
@@ -94,7 +97,8 @@ def main(args):
         # Initialize optimized sketch algorithms
         cu = ConservativeUpdateSketch(**cms_param_dict, KEY_T_SIZE=args.key_size)
         ag = AugmentedSketch(**ag_param_dict, KEY_T_SIZE=args.key_size)
-        sketches['cu'], sketches['ag'] = cu, ag
+        es = ElasticSketch(**es_param_dict, KEY_T_SIZE=args.key_size)
+        sketches['cu'], sketches['ag'], sketches['es'] = cu, ag, es
 
         # Initialize compressed sensing sketch algorithms
         pr = PRSketch(**pr_param_dict, KEY_T_SIZE=args.key_size)        
@@ -169,12 +173,13 @@ def main(args):
                     "-- cu: total space = {:.2f}KB, per time = {:.2f}us || ag: total space = {:.2f}KB, per time = {:.2f}us \n"\
                     "-- pr: total space = {:.2f}KB, per time = {:.2f}us || nze: total space = {:.2f}KB, per time = {:.2f}us \n"\
                     # "-- lcm: total space = {:.2f}KB, per time = {:.2f}us || lcs: total space = {:.2f}KB, per time = {:.2f}us || ls: total space = {:.2f}KB, per time = {:.2f}us \n"\
-                    "-- FLORE (flore): total space = {:.2f}KB, per time = {:.2f}us \n".format(
+                    "-- es: total space = {:.2f}KB, per time = {:.2f}us || FLORE (flore): total space = {:.2f}KB, per time = {:.2f}us \n".format(
                         cm.get_memory_usage() / 1024, time_dict['cm'] * 10**6, cs.get_memory_usage() / 1024, time_dict['cs'] * 10**6, 
                         cu.get_memory_usage() / 1024, time_dict['cu'] * 10**6, ag.get_memory_usage() / 1024, time_dict['ag'] * 10**6, 
                         pr.get_memory_usage() / 1024, time_dict['pr'] * 10**6, nze.get_memory_usage() / 1024, time_dict['nze'] * 10**6, 
                         # lcm.get_memory_usage() / 1024, time_dict['lcm'] * 10**6, lcs.get_memory_usage() / 1024, time_dict['lcs'] * 10**6, 
                         # ls.get_memory_usage() / 1024, time_dict['ls'] * 10**6, 
+                        es.get_memory_usage() / 1024, time_dict['es'] * 10**6, 
                         flore.get_memory_usage() / 1024, time_dict['flore'] * 10**6
                     ))
 
