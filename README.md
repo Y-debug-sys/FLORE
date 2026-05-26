@@ -31,7 +31,7 @@ For reproducibility, **all real-world data streams used in our experiments are i
 ├── 📁 Baselines               # submodule for baselines
 │   ├── 📁 classic_sketch               # Count-Min and Count
 │   ├── 📁 compressed_sensing_sketch    # PR-sketch and NZE-sketch
-│   ├── 📁 optimized_sketch             # Augmented and Conservative Update
+│   ├── 📁 optimized_sketch             # Augmented, Elastic and Conservative Update
 │   └── 📁 ...                          # Others
 ├── 📁 Flows                   # submodule for Flow-based generative model
 ├── 📄 main.py                 # main file for simulation
