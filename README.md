@@ -49,7 +49,8 @@ For reproducibility, **all real-world data streams used in our experiments are p
 │   ├── 📄 augmented_filter.py          # stream filtering mechanism
 │   ├── 📄 bloom_filter.py              # key tracking mechanism
 │   └── 📄 sketch.py                    # data-plane implementation
-└── 📁 Scripts                 # scripts for running Pram
+├── 📁 Scripts                 # scripts for running Pram
+└── 📁 PDFs                    # technical report (PDF)
 ```
 
 ---
