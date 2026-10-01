@@ -1,4 +1,17 @@
-# FLORE: On the (*Generative*) Linear Sketching Problem
+# FLORE: On the (*Generative*) Linear Sketching Problem<br><sub>Official PyTorch Implementation</sub>
+
+<div align="center">
+<p>
+
+[![](https://img.shields.io/github/stars/Y-debug-sys/FLORE.svg)](https://github.com/Y-debug-sys/FLORE/stargazers)
+[![](https://img.shields.io/github/forks/Y-debug-sys/FLORE.svg)](https://github.com/Y-debug-sys/FLORE/network) 
+[![](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/Y-debug-sys/FLORE/blob/master/LICENSE) 
+<a href= "http://arxiv.org/abs/2603.14474"><img src="https://img.shields.io/badge/Paper-arXiv-darkred" /></a>
+<img src="https://img.shields.io/badge/python-3.11-blue">
+<img src="https://img.shields.io/badge/pytorch-2.9.1-orange">
+
+</p>
+</div>
 
 👥 **Authors:** Xinyu Yuan, Yan Qiao<sup>✉️</sup>, Zonghui Wang<sup>✉️</sup>, and Wenzhi Chen
 
