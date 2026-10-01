@@ -1,6 +1,6 @@
 # FLORE: On the (*Generative*) Linear Sketching Problem
 
-**Xinyu Yuan, Yan Qiao, Zonghui Wang, Wenzhi Chen**
+👥 **Authors:** **Xinyu Yuan, Yan Qiao, Zonghui Wang, Wenzhi Chen**
 
 > This repository contains the official implementation of **FLORE**, the *first* deep generative framework for solving linear sketching problems in data streaming scenarios, accepted to ICDE ’27 (first round).
 
